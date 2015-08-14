@@ -1,5 +1,6 @@
 'use strict';
 
+console.log('- Initializing assets');
 module.exports = {
 	css: [
 		{

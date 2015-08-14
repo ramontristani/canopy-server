@@ -1,5 +1,7 @@
 'use strict';
 
+console.log('\n- Initializing server configuration');
+
 module.exports = {
 	general: {
 		title: '',
@@ -8,7 +10,7 @@ module.exports = {
 	
 	server: {
 		port: process.env.PORT || 1337,
-		deployment: 'dev'
+		deploymenttype: 'dev'
 	},
 	
 	keys: {
@@ -19,7 +21,7 @@ module.exports = {
 	database: {
 		mongodb: {
 			setdefault: true,
-			connection: 'mongodb://localhost:27017/canopy-server'
+			connection: 'mongodb://localhost/canopy-server'
 		},
 		
 		diskdb: {
