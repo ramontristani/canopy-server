@@ -4,3 +4,4 @@ typings/
 data/
 .idea/
 .DS_Store
+*.css

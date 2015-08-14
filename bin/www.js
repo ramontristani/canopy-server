@@ -1,13 +1,14 @@
 'use strict';
 
 var startup = require('../startup')
+	, modules = require('../server/modules')
 	, util = require('util');
 
 module.exports = {
 	start: function() {
-		var server = startup.server();startup
+		var server = startup.server();
 		
-		// TODO: Reference server modules and register them here (Routes, API's, etc.)
+		modules.register(server);
 		
 		server.app.listen(server.config.server.port, function() {
 			console.log('\n******************************************************************');

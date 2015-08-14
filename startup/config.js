@@ -4,13 +4,24 @@ console.log('\n- Initializing server configuration');
 
 module.exports = {
 	general: {
-		title: '',
+		title: 'Canopy Server',
 		description: ''
 	},
 	
 	server: {
 		port: process.env.PORT || 1337,
-		deploymenttype: 'dev'
+		deploymenttype: 'dev',
+		minification: {
+			minifyrenders: true,
+			options: {
+					removeComments: true,
+					removeCommentsFromCDATA: true,
+					collapseWhitespace: true,
+					collapseBooleanAttributes: true,
+					removeAttributeQuotes: false,
+					removeEmptyAttributes: true
+				}
+		}
 	},
 	
 	keys: {

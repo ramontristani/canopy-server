@@ -1,0 +1,12 @@
+@mixin set-bounds($width, $height, $padding, $margin) {
+	width: $width;
+	height: $height;
+	padding: $padding;
+	margin: $margin;
+}
+
+html {
+	body {
+		@include set-bounds(100%, 100%, 0, 0);
+	}
+}
