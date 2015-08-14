@@ -1,5 +1,6 @@
 node_modules/
 client/vendor/
 typings/
+data/
 .idea/
 .DS_Store
