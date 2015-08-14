@@ -1,0 +1,18 @@
+{
+  "name": "canopy-server",
+  "version": "0.0.1",
+  "authors": [
+    "Ramon E. Tristani <ramon.tristani@pcsweblabs.com>"
+  ],
+  "description": "Basic web application server for sites or RESTful API's",
+  "main": "server.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/vendor",
+    "test",
+    "tests"
+  ]
+}

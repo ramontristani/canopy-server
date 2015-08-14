@@ -1,0 +1,11 @@
+{
+  "name": "canopy-server",
+  "version": "0.0.1",
+  "description": "Basic web application server for sites or RESTful API's",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ramon E. Tristani",
+  "license": "MIT"
+}

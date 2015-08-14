@@ -1,0 +1,4 @@
+node_modules/
+client/vendor/
+.idea/
+.DS_Store
