@@ -15,6 +15,15 @@ module.exports = function() {
 		var mongoose = require('mongoose');
 		db = mongoose.connect(config.database.mongodb.connection);
 		console.log('- Successfully connected to MongoDB: ' + config.database.mongodb.connection);
+		
+		console.log('- Creating default client account...');
+		var userRepository = require('../server/modules/api/user/repository');
+		
+		userRepository.createDefaultClientAccount(function(error, result) {
+			console.log(!error && result
+				? result.message + result.document.email
+				: '- **** Error creating default client account ****');
+		});
 	}
 	
 	return db;

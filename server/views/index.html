@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="main">
 <head>
     <meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <!--{% for css in css.vendor %}
-    <link rel="stylesheet" href="{{ css }}" />
-    {% endfor %}
-
-    {% for css in css.custom %}
-    <link rel="stylesheet" href="{{ css }}" />
-    {% endfor %}-->
     
     {% for asset in css %}
     <link rel="stylesheet" href="{{ asset }}" />
@@ -21,8 +14,7 @@
     <base href="/"/>
 </head>
 <body>
-	<h1>Moment of the truth</h1>
-    <!--<layout year="{{year}}" heading="{{application.heading}}" subheading="{{application.subheading}}"></layout>-->
+	<layout year="{{year}}" title="{{title}}" description="{{description}}"></layout>
 
     {% for asset in js %}
     <script src="{{ asset }}"></script>

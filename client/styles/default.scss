@@ -1,12 +1,66 @@
-@mixin set-bounds($width, $height, $padding, $margin) {
-	width: $width;
-	height: $height;
-	padding: $padding;
-	margin: $margin;
+$main-body-color: rgba(250,250,250,1.0);
+$main-font-color: rgba(50,50,50,1.0);
+$font-family: 'Arial';
+$font-size: 9pt;
+$h1-zize: 22pt;
+$h2-zize: 18pt;
+$h3-zize: 14pt;
+$h4-zize: 12pt;
+$h5-zize: 10pt;
+$text-shadow-accent: 0 1px 0 rgba(255,255,255,0.9);
+
+@mixin bounds($height, $width) {
+    height: $height;
+    width: $width;
+}
+
+@mixin constraints($margin, $padding) {
+    margin: $margin;
+    padding: $padding;
+}
+
+@mixin color-theme($backcolor, $fontcolor) {
+    color: $fontcolor;
+    background-color: $backcolor;
+}
+
+@mixin font-metrics($family, $size) {
+    font-family: $family;
+    font-size: $size;
+}
+
+@mixin text-shadow($options) {
+    text-shadow: $options;
 }
 
 html {
-	body {
-		@include set-bounds(100%, 100%, 0, 0);
-	}
+    @include bounds(100%, 100%);
+    
+    body {
+        @include constraints(50px 0 0 0, 0);
+        @include color-theme($main-body-color, $main-font-color);
+        @include text-shadow($text-shadow-accent);
+        
+        /*
+         * **********************************************************************
+         *  Main index styles
+         * **********************************************************************
+         */
+        .index {
+            @include font-metrics($font-family, $font-size);
+            
+            .navbar {
+                border-radius: 0;
+            }
+
+            .jumbotron {
+                h1 {
+                    
+                    small {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
 }
