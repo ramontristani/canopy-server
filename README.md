@@ -1,6 +1,6 @@
 Canopy Server
 =============
-Canopy server is a NodeJS/Express application implementation. It is work in progress. It provides a 
+Canopy server is a NodeJS/Express boilerplate application implementation. It is work in progress. It provides a 
 basic implementation of server side components, as well as an AngularJS based client implementation 
 with HTML5 Mode enabled. It is intended as a starting point for building NodeJS web applications.
 
