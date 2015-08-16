@@ -9,7 +9,7 @@ module.exports = {
 		startup.server(function(server) {
 			modules.register(server);
 		
-			server.app.listen(server.config.server.port, function() {
+			server.http.listen(server.config.server.port, function() {
 				console.log('\n******************************************************************');
 				console.log(util.format('* %s is now listening to requests http://%s:%s',
 					'Canopy Server',

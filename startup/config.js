@@ -21,6 +21,7 @@ module.exports = {
 		deploymenttype: 'dev',
 		enablecors: true,
 		logroutes: true,
+		socketsenabled: true,
 		minification: {
 			minifyrenders: true,
 			options: {
