@@ -5,13 +5,13 @@ basic implementation of server side components, as well as an AngularJS based cl
 with HTML5 Mode enabled. It is intended as a starting point for building NodeJS web applications.
 
 ## Features at a Glance
-	* All server HTML is rendered minified. Additional steps will need to be taken to minimize AngularJS templates
-	* Connection to databases occurs on startup
-	* AngularJS HTML5 Mode is enabled and supported on the server. Refreshing routes preserves the current route
+ * All server HTML is rendered minified. Additional steps will need to be taken to minimize AngularJS templates
+ * Connection to databases occurs on startup
+ * AngularJS HTML5 Mode is enabled and supported on the server. Refreshing routes preserves the current route
 	
 ## Planned features
-	* Socket.io implementation
-	* More to come...
+ * Socket.io implementation
+ * More to come...
 
 ## Getting Started
 In order to get started, fork the repository or download a zip archive of the repository. Once downloaded, 
@@ -29,7 +29,7 @@ bower install
 
 This will install all the necessary dependencies for the application server. Because the server uses 
 MongoDB and DiskDB, it is necessary to have MongoDB installed in your system, or have access to a cloud 
-hosted MongoDB database. In order to configure the database, open the **/startup/config.js** file and 
+hosted MongoDB database. In order to configure the database, open the "**/startup/config.js**" file and 
 modify the following section as follows:
 
 ## Configuration For DiskDB
@@ -82,4 +82,5 @@ database: {
 ```
 
 
-You are all set! Great!
+You are all set.
+Build something great!
