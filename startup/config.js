@@ -19,6 +19,8 @@ module.exports = {
 	server: {
 		port: process.env.PORT || 1337,
 		deploymenttype: 'dev',
+		enablecors: true,
+		logroutes: true,
 		minification: {
 			minifyrenders: true,
 			options: {

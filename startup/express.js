@@ -11,7 +11,7 @@ var express = require('express')
 	, config = require('./config');
 
 console.log('- Initializing Express application server');
-module.exports = function () {
+module.exports = function (database) {
 	var application = express();
 
 	application.set('mediapath', __dirname.replace('startup', 'client/media/content'));
@@ -44,21 +44,40 @@ module.exports = function () {
 	application.use(methodOverride());
 	application.use(cookieParser(config.keys.cookies));
 	application.use(session({ secret: config.keys.sessions, resave: true, saveUninitialized: true }));
-	
-	application.all('/*', function(request, response, next) {
-		response.header("Access-Control-Allow-Origin", "*");
-		response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-		response.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
-		
-		if (request.method == 'OPTIONS') {
-			request.status(200).end();
-		} else {
-			next();
-		}
-	});
-	
-	//application.all('/api/v1/*', [require('../server/modules/api/validation')]);
 
+	if (config.server.logroutes) {
+		console.log('- Saving requests to the database log collection');
+		var logRepository = require('../server/modules/api/log/repository')
+			, Log = require('../server/modules/schemas').Log;
+		application.use(function(request, response, next) {
+			var data = {
+				data: request.headers,
+				logtype: Log.logTypes().resourceRequest
+			};
+			
+			logRepository.log(config.database.diskdb.setdefault ? database : null, data, function(error, result) {
+				if (error) {
+					console.log('*****Error loging request to the database');
+				}
+				next();
+			});
+		});
+	}
+
+	if (config.server.enablecors) {
+		application.all('/*', function (request, response, next) {
+			response.header("Access-Control-Allow-Origin", "*");
+			response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+			response.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+
+			if (request.method == 'OPTIONS') {
+				request.status(200).end();
+			} else {
+				next();
+			}
+		});
+	}
+	
 	console.log('- Express application successfully configured');
 
 	return application;

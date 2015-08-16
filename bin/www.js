@@ -6,18 +6,18 @@ var startup = require('../startup')
 
 module.exports = {
 	start: function() {
-		var server = startup.server();
+		startup.server(function(server) {
+			modules.register(server);
 		
-		modules.register(server);
-		
-		server.app.listen(server.config.server.port, function() {
-			console.log('\n******************************************************************');
-			console.log(util.format('* %s is now listening to requests http://%s:%s',
-				'Canopy Server',
-				'localhost',
-				server.config.server.port));
-			console.log('******************************************************************');
-			console.log('Build something great!');
+			server.app.listen(server.config.server.port, function() {
+				console.log('\n******************************************************************');
+				console.log(util.format('* %s is now listening to requests http://%s:%s',
+					'Canopy Server',
+					'localhost',
+					server.config.server.port));
+				console.log('******************************************************************');
+				console.log('Build something great!');
+			});
 		});
 	}
 };

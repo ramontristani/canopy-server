@@ -3,7 +3,7 @@ var userRepository = require('../server/modules/api/user/repository')
 	, config = require('./config');
 
 console.log('- Initializing database connection');
-module.exports = function() {
+module.exports = function(done) {
 	var errorMessage = '- **** Error creating default client account ****'
 		, db;
 	
@@ -20,6 +20,8 @@ module.exports = function() {
 				: errorMessage);
 		});
 		
+		done(db);
+		
 	} else if (config.database.mongodb.setdefault) {
 		var mongoose = require('mongoose');
 		db = mongoose.connect(config.database.mongodb.connection);
@@ -32,7 +34,7 @@ module.exports = function() {
 				? result.message + result.document.email
 				: errorMessage);
 		});
+		
+		done(db);
 	}
-	
-	return db;
 };

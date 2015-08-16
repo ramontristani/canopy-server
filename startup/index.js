@@ -3,15 +3,18 @@
 var config = require('./config')
 	, assets = require('./assets')
 	, db = require('./db')
-	, express = require('./express');
+	, express = require('./express')
+	, _ = require('lodash');
 
 module.exports = {
-	server: function() {
-		return {
-			app: express(),
-			db: db(),
-			config: config,
-			assets: assets
-		};
+	server: function(done) {		
+		db(function(database) {
+			done({
+				db: database,
+				app: express(database),
+				config: config,
+				assets: assets
+			});
+		});
 	}
 };
