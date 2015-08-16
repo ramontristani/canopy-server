@@ -18,13 +18,13 @@ In order to get started, fork the repository or download a zip archive of the re
 open the command line and execute the following commands:
 
 ```
-npm install
+$ npm install
 ```
 
 Then,
 
 ```
-bower install
+$ bower install
 ```
 
 This will install all the necessary dependencies for the application server. Because the server uses 
@@ -34,6 +34,8 @@ modify the following section as follows:
 
 ## Configuration For DiskDB
 ```
+...
+
 database: {
 	mongodb: {
 		// Set this flag to false
@@ -60,6 +62,8 @@ database: {
 
 ## Configuration For MongoDB
 ```
+...
+
 database: {
 	mongodb: {
 		// Set this flag to true
