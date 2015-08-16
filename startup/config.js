@@ -1,3 +1,11 @@
+/**
+* DISCLAIMER: 
+* Passwords must be changed and stored securely. All accounts,  acount as defined
+* in this file should be modified to suit your needs. Sufice to say, this file
+* contains sensitive information and should not be added to publically viewable
+* source control services such as Bitbucket or GitHub. Please store in a private
+* repository.
+*/
 'use strict';
 
 console.log('\n- Initializing server configuration');
@@ -26,14 +34,14 @@ module.exports = {
 	
 	keys: {
 		sessions: '0c67f367-cc77-45fd-a2ec-2ea3a6f51ba8',
-		cookies: '8df275b7-f35f-4ea1-bcc8-052817d780ad'
+		cookies: '8df275b7-f35f-4ea1-bcc8-052817d780ad',
+		jwt: '62da65af-b5eb-4151-9ad2-abf3c96524d3'
 	},
 	
 	crypto: {
 		swf: 10
 	},
 	
-	// NOTE: Passwords must be changed and stored securely
 	accounts: {
 		maxloginattempts: 5,
 		client: {
