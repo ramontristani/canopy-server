@@ -67,6 +67,7 @@ module.exports = function (database) {
 		console.log('- Saving requests to the database log collection');
 		var logRepository = require('../server/modules/api/log/repository')
 			, Log = require('../server/modules/schemas').Log;
+			
 		application.use(function (request, response, next) {
 			var data = {
 				data: request.headers,
