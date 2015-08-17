@@ -8,7 +8,9 @@ var express = require('express')
 	, swig = require('swig')
 	, minifier = require('html-minifier')
 	, morgan = require('morgan')
-	, config = require('./config');
+	, jwt = require('jwt-simple')
+	, config = require('./config')
+	, userRepository = require('../server/modules/api/user/repository');
 
 console.log('- Initializing Express application server');
 module.exports = function (database) {
@@ -45,17 +47,33 @@ module.exports = function (database) {
 	application.use(cookieParser(config.keys.cookies));
 	application.use(session({ secret: config.keys.sessions, resave: true, saveUninitialized: true }));
 
+	application.use(function (request, response, next) {
+		if (request.url.indexOf('api/secure/') > -1) {
+			var token = request.headers['authorization'].replace('Bearer ', '');
+			userRepository.verifyAccessToken(token, function (error, valid) {
+				if (error) {
+					response.status(400);
+					return next({
+						error: error.message
+					});
+				}
+			});
+		}
+
+		next();
+	});
+
 	if (config.server.logroutes) {
 		console.log('- Saving requests to the database log collection');
 		var logRepository = require('../server/modules/api/log/repository')
 			, Log = require('../server/modules/schemas').Log;
-		application.use(function(request, response, next) {
+		application.use(function (request, response, next) {
 			var data = {
 				data: request.headers,
 				logtype: Log.logTypes().resourceRequest
 			};
-			
-			logRepository.log(config.database.diskdb.setdefault ? database : null, data, function(error, result) {
+
+			logRepository.log(config.database.diskdb.setdefault ? database : null, data, function (error, result) {
 				if (error) {
 					console.log('*****Error loging request to the database');
 				}
@@ -77,7 +95,7 @@ module.exports = function (database) {
 			}
 		});
 	}
-	
+
 	console.log('- Express application successfully configured');
 
 	return application;

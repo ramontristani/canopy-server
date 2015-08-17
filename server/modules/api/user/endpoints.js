@@ -8,11 +8,9 @@ module.exports = {
 			? server.db
 			: null;
 			
-		console.log('REGISTERED ROUTES!!!');
-		
 		server.app.route('/api/v1/users/authentication')
 			.get(function(request, response) {
-				response.send('HELLO AUTHENTICATE');
+				response.send('Nice Try...');
 			}).post(function(request, response) {
 				userRepository.authenticate(db, request.body, function(error, token) {
 					if (error) {

@@ -37,11 +37,13 @@ module.exports = {
 	
 	keys: {
 		sessions: '0c67f367-cc77-45fd-a2ec-2ea3a6f51ba8',
-		cookies: '8df275b7-f35f-4ea1-bcc8-052817d780ad',
-		jwt: '62da65af-b5eb-4151-9ad2-abf3c96524d3'
+		cookies: '8df275b7-f35f-4ea1-bcc8-052817d780ad'
 	},
 	
 	tokens: {
+		issuer: 'localhost@canopyserver.com',
+		subject: 'API Access',
+		secret: '62da65af-b5eb-4151-9ad2-abf3c96524d3',
 		daysexpires: 5,
 		jwtencoding: 'HS512'
 	},
