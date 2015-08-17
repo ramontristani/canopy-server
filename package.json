@@ -25,6 +25,7 @@
     "express-session": "^1.11.3",
     "fs": "0.0.2",
     "html-minifier": "^0.7.2",
+    "jwt-simple": "^0.3.0",
     "lodash": "^3.10.1",
     "method-override": "^2.3.5",
     "moment": "^2.10.6",

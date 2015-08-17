@@ -25,10 +25,5 @@ module.exports = {
 			
 			response.render('index', options);
 		});
-		
-		// Splat for html5Mode angular refreshes
-		server.app.all('/*', function(request, response) {
-			return response.redirect(request.protocol + '://' + request.get('Host') + '/#' + request.url)
-		});
 	}
 };

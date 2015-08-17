@@ -18,7 +18,7 @@
         $locationProvider.html5Mode(true);
     }]);
 	
-	main.run(['$window', '$rootScope', function($window, $rootScope) {
+	main.run(['$window', '$rootScope', '$injector', function($window, $rootScope, $injector) {
         $window.addEventListener('dragover', function(e) {
             e.stopPropagation();
             e.preventDefault();
@@ -33,5 +33,15 @@
         $rootScope.$on("$routeChangeSuccess", function (event, currentRoute, previousRoute) {
             window.scrollTo(0, 0);
         });
+        
+        $injector.get("$http").defaults.transformRequest = function(data, headersGetter) { 
+            if ($rootScope.oauth) {
+                headersGetter()['Authorization'] = "Bearer " + $rootScope.oauth.token;
+            } 
+            
+            if (data) { 
+                return angular.toJson(data); 
+            }
+        }
     }]);
 })();

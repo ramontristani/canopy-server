@@ -68,7 +68,7 @@ module.exports = function (database) {
 		application.all('/*', function (request, response, next) {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-			response.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+			response.header('Access-Control-Allow-Headers', 'Content-type,Content-Length,Authorization,Accept,X-Access-Token,X-Key,X-Requested-With');
 
 			if (request.method == 'OPTIONS') {
 				request.status(200).end();

@@ -11,7 +11,7 @@ var Schema = mongoose.Schema({
 	email: { type: String, required: true, unique: true },
 	secret: { type: String, required: true },
 	avatar: { type: String },
-	lastLogin: { type: Date },
+	lastlogin: { type: Date },
 	attempts: { type: Number, required: true, default: 0 },
 	locked: { type: Boolean },
 	active: { type: Boolean },

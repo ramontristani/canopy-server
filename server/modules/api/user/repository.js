@@ -1,10 +1,118 @@
 'use strict';
 
 var bcrypt = require('bcrypt')
+	, _ = require('lodash')
+	, jwt = require('jwt-simple')
+	, moment = require('moment')
 	, config = require('../../../../startup/config')
 	, clientAccount = config.accounts.client;
+	
+var messages = {
+	accountNotFound: 'Account not found',
+	accountLocked: 'Account locked',
+	invalidCredentials: 'Invalid account credentials'
+};
+
+var compareSecret = function(value, original, next) {
+	bcrypt.compare(value, original, function(error, match) {
+		if (error) {
+			return next(error);
+		}
+		
+		next(null, match);
+	});
+};
 
 module.exports = {
+	authenticate: function(diskdb, credentials, done) {
+		var tokenExpiration = moment().add(config.tokens.daysexpires, 'days').valueOf();
+		console.log(tokenExpiration);
+		if (!diskdb) {
+			var User = require('../../schemas').User;
+			User.findOne({ email: credentials.email }, function(error, account) {
+				if (error || !account) {
+					return done(error || new Error(messages.accountNotFound));
+				}
+				
+				if (account.locked) {
+					return done(new Error(messages.accountLocked));
+				}
+				
+				account.compareSecret(credentials.secret, function(error, match) {
+					if (error || !match) {
+						account.attempts = account.attempts + 1;
+						if (account.attempts === config.accounts.maxloginattempts) {
+							account.locked = true;
+						}
+						
+						account.save(function(error, account) {
+							return done(error || new Error(messages.invalidCredentials));
+						});
+					}
+					
+					account.lastlogin = Date.now();
+					account.save(function(error, account) { 
+						var tokenData = _.assign({ expires: tokenExpiration }, {
+							profile: {
+								firstname: account.firstname,
+								lastname: account.lastname,
+								email: account.email,
+								avatar: account.avatar,
+								lastlogin: account.lastlogin
+							}
+						});
+						
+						done(null, jwt.encode(tokenData, config.keys.jwt, config.tokens.jwtencoding));
+					});
+					
+				});
+				
+			});
+		} else {
+			try {
+				diskdb.loadCollections(['users']);
+				var account = diskdb.users.findOne({ email: credentials.email });
+				if (!account) {
+					return done(new Error(messages.accountNotFound));
+				}
+				
+				if (account.locked) {
+					return done(new Error(messages.accountLocked));
+				}
+				
+				compareSecret(credentials.secret, account.secret, function(error, match) {
+					if (error || !match) {
+						account.attempts = account.attempts + 1;
+						if (account.attempts === config.accounts.maxloginattempts) {
+							account.locked = true;
+						}
+						
+						diskdb.users.update({ _id: account._id }, account, { multi: false, upsert: false });
+						return done(new Error(messages.invalidCredentials));
+					}
+					
+					account.lastlogin = Date.now();
+					diskdb.users.update({ _id: account._id }, account, { multi: false, upsert: false });
+					
+					var tokenData = _.assign({ expires: tokenExpiration }, {
+						profile: {
+							firstname: account.firstname,
+							lastname: account.lastname,
+							email: account.email,
+							avatar: account.avatar,
+							lastlogin: account.lastlogin
+						}
+					});
+					
+					done(null, jwt.encode(tokenData, config.keys.jwt, config.tokens.jwtencoding));
+				});
+				
+			} catch (error) {
+				done(error);
+			}
+		}
+	},
+	
 	createDefaultClientAccount: function(diskdb, done) {
 		if (!diskdb) {
 			var User = require('../../schemas').User;

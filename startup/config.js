@@ -41,6 +41,11 @@ module.exports = {
 		jwt: '62da65af-b5eb-4151-9ad2-abf3c96524d3'
 	},
 	
+	tokens: {
+		daysexpires: 5,
+		jwtencoding: 'HS512'
+	},
+	
 	crypto: {
 		swf: 10
 	},
