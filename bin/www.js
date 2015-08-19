@@ -17,6 +17,13 @@ module.exports = {
 					server.config.server.port));
 				console.log('******************************************************************');
 				console.log('Build something great!');
+				
+				if ('dev' === server.config.server.deploymenttype 
+					&& server.config.development.openbrowser) {
+					
+					var open = require('open');
+					open(server.config.development.location, server.config.development.browser);
+				}
 			});
 		});
 	}

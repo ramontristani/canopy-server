@@ -35,6 +35,22 @@ module.exports = {
 		}
 	},
 	
+	/**
+	 * During development, this enables the browser to launch the provided
+	 * location after "npm start" is issued at the command line.
+	 * 
+	 * Options:
+	 * openbrowser: set to false if you do not want the browser to open
+	 * location: the URL to load when the browser opens
+	 * browser: Leave empty for default browser, or include the name of the
+	 * 			browser to open, i.e. "Firefox", "Safari", etc.
+	 */
+	development: {
+		openbrowser: true,
+		location: 'http://localhost:1337',
+		browser: ''
+	},
+	
 	keys: {
 		sessions: '0c67f367-cc77-45fd-a2ec-2ea3a6f51ba8',
 		cookies: '8df275b7-f35f-4ea1-bcc8-052817d780ad'
