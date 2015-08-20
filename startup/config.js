@@ -46,7 +46,7 @@ module.exports = {
 	 * 			browser to open, i.e. "Firefox", "Safari", etc.
 	 */
 	development: {
-		openbrowser: false,
+		openbrowser: true,
 		location: 'http://localhost:1337',
 		browser: ''
 	},

@@ -13,11 +13,16 @@
         }).when('/about', {
             templateUrl: '/modules/about/partials/about-partial.html',
             controller: 'AboutController',
-            resolve: {
-                authenticated: function(authenticationFactory, $route) {
-                    return authenticationFactory.authenticated();
-                }
-            }
+            
+            /**
+             * The about route does not need to be authenticated. This was done for testing
+             * secured routes in angular. The sesolve object can be safely removed
+             */
+            // resolve: {
+            //     authenticated: function(authenticationFactory, $route) {
+            //         return authenticationFactory.authenticated();
+            //     }
+            // }
         }).when('/sign-in', {
             templateUrl: '/modules/authentication/partials/authentication-partial.html',
             controller: 'AuthenticationController',
