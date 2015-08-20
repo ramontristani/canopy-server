@@ -1,0 +1,23 @@
+<div class="signin col-md-4">
+	<form ng-submit="onSignIn($event)">
+		<h2>Account Access</h2>
+		<div class="input-group">
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-user"></span>
+			</span>
+			<input type="email" placeholder="Email Address" class="form-control" ng-model="credentials.email" />
+		</div>
+
+		<div class="input-group">
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-option-horizontal"></span>
+			</span>
+			<input type="password" placeholder="Password" class="form-control" ng-model="credentials.secret" />
+		</div>
+
+		<button type="submit" class="btn btn-primary btn-sm">
+			<span class="glyphicon glyphicon-log-in"></span>
+			<span>Sign In</span>
+		</button>
+	</form>
+</div>

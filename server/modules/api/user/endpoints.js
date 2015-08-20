@@ -12,16 +12,14 @@ module.exports = {
 			.get(function(request, response) {
 				response.send('Nice Try...');
 			}).post(function(request, response) {
-				userRepository.authenticate(db, request.body, function(error, token) {
+				userRepository.authenticate(db, request.body, function(error, authData) {
 					if (error) {
 						return response.status(401).json({
 							error: error.message
 						});
 					}
 					
-					response.status(200).json({
-						token: token
-					});
+					response.status(200).json(authData);
 				});
 		});
 	}

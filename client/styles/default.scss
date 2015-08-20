@@ -57,8 +57,20 @@ html {
                 h1 {
                     
                     small {
+                        @include constraints(0, 2px 0 2px 8px);
+                        font-size: 16pt;
                         display: block;
                     }
+                }
+            }
+            
+            .signin {
+                .input-group {
+                    @include constraints(0 0 6px 0, 0);
+                }
+                
+                .btn {
+                    //width: 100%;
                 }
             }
         }

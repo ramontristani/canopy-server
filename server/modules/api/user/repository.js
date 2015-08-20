@@ -68,7 +68,11 @@ module.exports = {
 								}
 							});
 
-						done(null, jwt.encode(tokenData, config.tokens.secret, config.tokens.jwtencoding));
+						done(null, {
+							email: tokenData.profile.email,
+							displayname: tokenData.profile.firstname + ' ' + tokenData.profile.lastname,
+							token: jwt.encode(tokenData, config.tokens.secret, config.tokens.jwtencoding)
+						});
 					});
 
 				});
@@ -114,7 +118,11 @@ module.exports = {
 							}
 						});
 
-					done(null, jwt.encode(tokenData, config.tokens.secret, config.tokens.jwtencoding));
+					done(null, {
+						email: tokenData.profile.email,
+						displayname: tokenData.profile.firstname + ' ' + tokenData.profile.lastname,
+						token: jwt.encode(tokenData, config.tokens.secret, config.tokens.jwtencoding)
+					});
 				});
 
 			} catch (error) {

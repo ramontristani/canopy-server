@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 	var main = angular.module('main', ['ngRoute', 'main.layout']);
-	
-	main.config(['$routeProvider', '$locationProvider',function($routeProvider, $locationProvider) {
+    
+    main.config(['$routeProvider', '$locationProvider',function($routeProvider, $locationProvider) {
         $routeProvider.otherwise({
             redirectTo: '/home'
         });
@@ -12,7 +12,20 @@
             controller: 'HomeController'
         }).when('/about', {
             templateUrl: '/modules/about/partials/about-partial.html',
-            controller: 'AboutController'
+            controller: 'AboutController',
+            resolve: {
+                authenticated: function(authenticationFactory, $route) {
+                    return authenticationFactory.authenticated();
+                }
+            }
+        }).when('/sign-in', {
+            templateUrl: '/modules/authentication/partials/authentication-partial.html',
+            controller: 'AuthenticationController',
+            resolve: {
+                anonymous: function(authenticationFactory, $route) {
+                    return authenticationFactory.unauthenticated();
+                }
+            }
         });
 
         $locationProvider.html5Mode(true);
@@ -35,8 +48,8 @@
         });
         
         $injector.get("$http").defaults.transformRequest = function(data, headersGetter) { 
-            if ($rootScope.oauth) {
-                headersGetter()['Authorization'] = "Bearer " + $rootScope.oauth.token;
+            if ($window.oauth) {
+                headersGetter()['Authorization'] = "Bearer " + $window.oauth.token;
             } 
             
             if (data) { 
