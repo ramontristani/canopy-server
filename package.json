@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "postinstall": "bower install",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Ramon E. Tristani",
   "license": "MIT",
@@ -39,6 +39,9 @@
     "uuid": "^2.0.1"
   },
   "devDependencies": {
-    "open": "0.0.5"
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5",
+    "open": "0.0.5",
+    "supertest": "^1.0.1"
   }
 }
