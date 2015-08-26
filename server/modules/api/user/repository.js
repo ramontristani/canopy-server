@@ -153,68 +153,77 @@ module.exports = {
 		}
 	},
 
-	createDefaultClientAccount: function (diskdb, done) {
+	createDefaultAccounts: function (diskdb, done) {
+		var docs = [];
 		if (!diskdb) {
-			var User = require('../../schemas').User;
-
-			User.findOne({ email: clientAccount.email }, function (error, user) {
-				if (error) {
-					return done(error);
-				}
-
-				if (user) {
-					return done(null, {
-						message: '- Reusing existing client account: ',
-						document: user
-					});
-				}
-
-				var client = new User(clientAccount);
-				client.save(function (error, doc) {
+			config.accounts.objects.forEach(function(account) {
+				var User = require('../../schemas').User;
+	
+				User.findOne({ email: account.email }, function (error, user) {
 					if (error) {
 						return done(error);
 					}
-
-					done(null, {
-						message: '- Successfully created client user account: ',
-						document: doc
+	
+					if (user) {
+						return done(null, {
+							message: '- Reusing existing client account: ',
+							document: user
+						});
+					}
+	
+					var client = new User(account);
+					client.save(function (error, doc) {
+						if (error) {
+							return done(error);
+						}
+						
+						docs.push(doc);
 					});
 				});
 			});
+			
+			done(null, {
+				message: '- Successfully created client user accounts: ',
+				document: docs
+			});
 		} else {
-			try {
-				diskdb.loadCollections(['users']);
-				var user = diskdb.users.findOne({ email: clientAccount.email });
-
-				if (user) {
-					return done(null, {
-						message: '- Reusing existing client account: ',
-						document: user
-					});
-				} else {
-					bcrypt.genSalt(config.crypto.swf, function (error, salt) {
-						if (error) {
-							throw error;
-						}
-
-						bcrypt.hash(clientAccount.secret, salt, function (error, hash) {
+			config.accounts.objects.forEach(function (account) {
+				try {
+					diskdb.loadCollections(['users']);
+					var user = diskdb.users.findOne({ email: clientAccount.email });
+	
+					if (user) {
+						return done(null, {
+							message: '- Reusing existing client account: ',
+							document: user
+						});
+					} else {
+						bcrypt.genSalt(config.crypto.swf, function (error, salt) {
 							if (error) {
 								throw error;
 							}
-
-							clientAccount.secret = hash;
-							user = diskdb.users.save(clientAccount);
-							done(null, {
-								message: '- Successfully created client user account: ',
-								document: user
+	
+							bcrypt.hash(clientAccount.secret, salt, function (error, hash) {
+								if (error) {
+									throw error;
+								}
+	
+								clientAccount.secret = hash;
+								user = diskdb.users.save(clientAccount);
+								docs.push(user);
 							});
 						});
-					});
+					}
+	
+				} catch (e) {
+					return done(e);
 				}
-
-			} catch (e) {
-				return done(e);
-			}
+			});
+			
+			done(null, {
+				message: '- Successfully created client user accounts: ',
+				document: docs
+			});
 		}
 	}
 };

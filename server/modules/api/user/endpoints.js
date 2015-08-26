@@ -7,7 +7,7 @@ module.exports = {
 		var db = server.config.database.diskdb.setdefault
 			? server.db
 			: null;
-			
+		
 		server.app.route('/api/v1/users/authentication')
 			.get(function(request, response) {
 				response.send('Nice Try...');

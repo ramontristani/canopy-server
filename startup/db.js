@@ -4,8 +4,18 @@ var userRepository = require('../server/modules/api/user/repository')
 
 console.log('- Initializing database connection');
 module.exports = function(done) {
-	var errorMessage = '- **** Error creating default client account ****'
+	var errorMessage = '- **** Error creating default default accounts ****'
+		, multProvidersMessage = '- **** Error in database configuration. Multiple providers are not supported ****'
+		, noProvidersMessage = '- **** Error in database configuration. No database provider selected ****'
 		, db;
+		
+	if (config.database.diskdb.setdefault && config.database.mongodb.setdefault) {
+		return done(new Error(multProvidersMessage));
+	}
+	
+	if (!config.database.diskdb.setdefault && !config.database.mongodb.setdefault) {
+		return done(new Error(noProvidersMessage));
+	}
 	
 	if (config.database.diskdb.setdefault) {
 		var diskdb = require('diskdb')
@@ -14,7 +24,7 @@ module.exports = function(done) {
 		db = diskdb.connect(path, config.database.diskdb.collections);
 		console.log('- Successfully connected to DiskDB: ' + path);
 		
-		userRepository.createDefaultClientAccount(db, function(error, result) {
+		userRepository.createDefaultAccounts(db, function(error, result) {
 			console.log(!error && result
 				? result.message + result.document.email
 				: errorMessage);
@@ -29,7 +39,7 @@ module.exports = function(done) {
 		
 		console.log('- Creating default client account...');
 		
-		userRepository.createDefaultClientAccount(null, function(error, result) {
+		userRepository.createDefaultAccounts(null, function(error, result) {
 			console.log(!error && result
 				? result.message + result.document.email
 				: errorMessage);
