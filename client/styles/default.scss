@@ -54,12 +54,14 @@ html {
             }
 
             .jumbotron {
+                background-color: rgba(191,205,213,1.0);
                 h1 {
                     
                     small {
                         @include constraints(0, 2px 0 2px 8px);
                         font-size: 16pt;
                         display: block;
+                        color: rgba(50,50,50,1.0);
                     }
                 }
             }
