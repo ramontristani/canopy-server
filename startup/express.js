@@ -11,8 +11,15 @@ var express = require('express')
 	, jwt = require('jwt-simple')
 	, config = require('./config')
 	, userRepository = require('../server/modules/api/user/repository');
+	
+var messages = {
+	init: '- Initializing Express application server',
+	requestLoggingEnabled: '- Saving of requests to the database log collection is enabled',
+	successfulConfiguration: '- Express application successfully configured',
+	errorLoggingToDb: '- *** Error loging request to the database'
+};
 
-console.log('- Initializing Express application server');
+console.log(messages.init);
 module.exports = function (database) {
 	var application = express();
 
@@ -64,7 +71,7 @@ module.exports = function (database) {
 	});
 
 	if (config.server.logroutes) {
-		console.log('- Saving requests to the database log collection');
+		console.log(messages.requestLoggingEnabled);
 		var logRepository = require('../server/modules/api/log/repository')
 			, Log = require('../server/modules/schemas').Log;
 			
@@ -76,7 +83,7 @@ module.exports = function (database) {
 
 			logRepository.log(config.database.diskdb.setdefault ? database : null, data, function (error, result) {
 				if (error) {
-					console.log('*****Error loging request to the database');
+					console.log(messages.errorLoggingToDb);
 				}
 				next();
 			});
@@ -97,7 +104,7 @@ module.exports = function (database) {
 		});
 	}
 
-	console.log('- Express application successfully configured');
+	console.log(messages.successfulConfiguration);
 
 	return application;
 }

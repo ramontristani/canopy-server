@@ -6,7 +6,11 @@ var startup = require('../startup')
 
 module.exports = {
 	start: function() {
-		startup.server(function(server) {
+		startup.server(function(error, server) {
+			if (error) {
+				return console.log(error);
+			}
+			
 			modules.register(server);
 		
 			server.http.listen(server.config.server.port, function() {

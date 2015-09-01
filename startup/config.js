@@ -202,16 +202,29 @@ module.exports = {
 	 * @see https://www.npmjs.com/package/nodemailer
 	 */
 	mail: {
-		service: '',
-		
 		/**
-		 * ###Mail Authentication Options
-		 * @user User name used for logging in to the mail service (usually and email address)
-		 * @pwd Password used in combilation with a user name to log in to the mail service
+		 * ##Enable
+		 * Set to true if the application will have mail sending capabilities. The SMTP transport will 
+		 * then be attached to the configured server object. If mail is enabled without a provider, 
+		 * mail will still work but most email clients will route the email to the junk folder.
 		 */
-		auth: {
-			user: '',
-			pwd: ''
+		enable: true,
+		settings: {
+			/**
+			* ##Mail Service Provider
+			* The mail service provider from which to create the SMTP transport
+			*/
+			service: '',
+			
+			/**
+			* ###Mail Authentication Options
+			* @user User name used for logging in to the mail service (usually and email address)
+			* @pwd Password used in combilation with a user name to log in to the mail service
+			*/
+			auth: {
+				user: '',
+				pwd: ''
+			}
 		}
 	}
 };

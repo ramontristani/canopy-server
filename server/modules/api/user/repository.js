@@ -12,7 +12,9 @@ var messages = {
 	accountLocked: 'Account locked',
 	invalidCredentials: 'Invalid account credentials',
 	invalidAccessToken: 'Invalid access token',
-	expiredAccessToken: 'Expired access token'
+	expiredAccessToken: 'Expired access token',
+	reusingExistingAccounts: '- Reusing existing client accounts',
+	successfulAccountCreation: '- Successfully created client user accounts'
 };
 
 var compareSecret = function (value, original, next) {
@@ -155,6 +157,7 @@ module.exports = {
 
 	createDefaultAccounts: function (diskdb, done) {
 		var docs = [];
+		
 		if (!diskdb) {
 			config.accounts.objects.forEach(function(account) {
 				var User = require('../../schemas').User;
@@ -166,7 +169,7 @@ module.exports = {
 	
 					if (user) {
 						return done(null, {
-							message: '- Reusing existing client account: ',
+							message: messages.reusingExistingAccounts,
 							document: user
 						});
 					}
@@ -183,8 +186,8 @@ module.exports = {
 			});
 			
 			done(null, {
-				message: '- Successfully created client user accounts: ',
-				document: docs
+				message: messages.successfulAccountCreation,
+				documents: docs
 			});
 		} else {
 			config.accounts.objects.forEach(function (account) {
@@ -194,7 +197,7 @@ module.exports = {
 	
 					if (user) {
 						return done(null, {
-							message: '- Reusing existing client account: ',
+							message: messages.reusingExistingAccounts,
 							document: user
 						});
 					} else {
@@ -221,8 +224,8 @@ module.exports = {
 			});
 			
 			done(null, {
-				message: '- Successfully created client user accounts: ',
-				document: docs
+				message: messages.successfulAccountCreation,
+				documents: docs
 			});
 		}
 	}
