@@ -7,3 +7,4 @@ data/
 .sass-cache/
 *.css
 scratch.txt
+.settings/
