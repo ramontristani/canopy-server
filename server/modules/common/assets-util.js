@@ -7,11 +7,11 @@ module.exports = {
 	vendorScripts: function (config) {
 		var localVendorPaths = bowerMains('**/*.js')
 			, result = [];
-
-		_.each(localVendorPaths, function (script) {
-			var start = script.indexOf('/vendor')
+			
+		localVendorPaths.forEach(function(script) {
+			var start = script.indexOf('vendor')
 				, end = script.length;
-
+				
 			result.push(script.slice(start, end));
 		});
 
@@ -34,7 +34,7 @@ module.exports = {
 		_.each(custom, function (path) {
 			result.push(path);
 		});
-
+		
 		return result;
 	},
 
